@@ -11,14 +11,16 @@ import HttpApiClient from '../../services/HttpApiClient';
 function App() {
 
   const client = new HttpApiClient({
-    url: '/api/v1/'
+    url: '/api/v1/',
+    auth: 'uyLH5PA0MngNyRaPQvr386SOSUiXU8'
   });
-  client.ping()
+
+  client.a2iCampaignTtsGet('mytestcamp2', '123')
     .then((data) => {
-      console.log('outer ping OK', data);
+      console.log('request OK', data);
     })
     .catch((error) => {
-      console.log('outer ping Error', error);
+      console.log('request Error', error);
     });
 
   return (
