@@ -25,12 +25,14 @@ function App() {
 
   return (
     <div className="App">
-      <Header />
-      <div className="mainplane" >
-        <Sidebar />
-        <Workplane />
+      <div className="container-fluid">
+        <Header />
+        <div className="mainplane row" >
+          <Sidebar  className="col-2"/>
+          <Workplane className="col-10"/>
+        </div>
+        <Footer />
       </div>
-      <Footer />
     </div>
   );
 }

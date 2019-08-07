@@ -6,6 +6,7 @@
   color: #61dafb;
 }
 
-.mainplane > * {
-  display: inline;
+.mainplane {
+  min-height: 85vh;
+  text-align: left;
 }
