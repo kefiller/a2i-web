@@ -103,12 +103,18 @@ export default class HttpApiClient {
     }
 
     a2iCampaignStatus = (name) => {
-        return this.post({
-            'method': 'a2i.campaign.status',
-            'auth': this.auth,
-            'params': {
-                name
-            }
+        return new Promise((resolve, reject) => {
+            return this.post({
+                'method': 'a2i.campaign.status',
+                'auth': this.auth,
+                'params': {
+                    name
+                }
+            })
+            .then(({status}) => {
+                resolve(status);
+            })
+            .catch(error => reject(error));
         });
     }
 

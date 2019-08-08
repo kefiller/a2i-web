@@ -5,12 +5,13 @@ import './Workplane.css';
 
 import CampaignList from '../CampaignList';
 
-const Workplane = ({ className }) => {
+const Workplane = ({ className, apiClient }) => {
+    const renderCampaignList = () => <CampaignList apiClient={apiClient}/>;
     return (
         <div className={`Workplane ${className}`}>
             <div>
-                <Route path="/" exact component={CampaignList} />
-                <Route path="/CampaignList" component={CampaignList} />
+                <Route path="/" exact render={renderCampaignList} />
+                <Route path="/CampaignList" render={renderCampaignList} />
                 <Route path="/NewCampaign" component={NotImplementedYet} />
                 <Route path="/Logout" component={NotImplementedYet} />
             </div>
