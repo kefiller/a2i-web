@@ -1,21 +1,20 @@
 import React from 'react';
-import { Link } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 
 import './Sidebar.css'
 
 const Sidebar = ({ className }) => {
     return (
         <div className={`Sidebar ${className}`}>
-            <br />
             <ul className="nav flex-column">
                 <li className="nav-item">
-                    <Link className="nav-link" to="/NewCampaign/">Новая кампания</Link>
+                    <NavLink className="nav-link" to="/NewCampaign/">Новая кампания</NavLink>
                 </li>
                 <li className="nav-item">
-                    <Link className="nav-link active" to="/CampaignList/">Список кампаний</Link>
+                    <NavLink className="nav-link" to="/CampaignList/">Список кампаний</NavLink>
                 </li>
                 <li className="nav-item">
-                    <Link className="nav-link" to="/Logout/">Выход</Link>
+                    <NavLink className="nav-link" to="/Logout/">Выход</NavLink>
                 </li>
             </ul>
         </div>

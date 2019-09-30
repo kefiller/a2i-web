@@ -4,6 +4,7 @@ import { Route } from "react-router-dom";
 import './Workplane.css';
 
 import CampaignList from '../CampaignList';
+import NewEditCampaign from '../NewEditCampaign';
 
 const Workplane = ({ className, apiClient }) => {
     const renderCampaignList = () => <CampaignList apiClient={apiClient}/>;
@@ -12,7 +13,7 @@ const Workplane = ({ className, apiClient }) => {
             <div>
                 <Route path="/" exact render={renderCampaignList} />
                 <Route path="/CampaignList" render={renderCampaignList} />
-                <Route path="/NewCampaign" component={NotImplementedYet} />
+                <Route path="/NewCampaign" component={NewEditCampaign} />
                 <Route path="/Logout" component={NotImplementedYet} />
             </div>
         </div>

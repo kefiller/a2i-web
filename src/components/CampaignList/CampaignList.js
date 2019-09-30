@@ -1,5 +1,6 @@
 import React from 'react';
-import { faArrowUp, faArrowDown } from "@fortawesome/free-solid-svg-icons";
+//faArrowUp
+import { faArrowDown } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 export default class CampaignList extends React.Component {
