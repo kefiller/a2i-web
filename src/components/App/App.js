@@ -1,14 +1,14 @@
 import React from 'react';
-import './App.css';
+import './app.css';
 
-import Header from '../Header';
-import Sidebar from '../Sidebar';
-import Workplane from '../Workplane';
-import Footer from '../Footer';
+import Header from '../pages/header';
+import Sidebar from '../pages/sidebar';
+import Workplane from '../pages/workplane';
+import Footer from '../pages/footer';
 
-import HttpApiClient from '../../services/HttpApiClient';
+import CCSAPiService from '../../services/ccs-api-service';
 
-const apiClient = new HttpApiClient({
+const apiClient = new CCSAPiService({
   url: '/api/v1/',
   auth: 'uyLH5PA0MngNyRaPQvr386SOSUiXU8'
 });

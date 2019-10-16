@@ -1,11 +1,11 @@
 import axios from 'axios';
 
-// const client = new HttpApiClient({
+// const client = new CCSHttpApiClient({
 //     url: '/api/v1/',
 //     auth: 'authToken'
 //   });
 
-export default class HttpApiClient {
+export default class CCSApiService {
 
     url = {};
     auth = '';

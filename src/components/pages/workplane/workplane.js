@@ -1,10 +1,10 @@
 import React from 'react';
 import { Route } from "react-router-dom";
 
-import './Workplane.css';
+import './workplane.css';
 
-import CampaignList from '../CampaignList';
-import NewEditCampaign from '../NewEditCampaign';
+import CampaignList from '../campaign-list';
+import NewEditCampaign from '../new-edit-campaign';
 
 const Workplane = ({ className, apiClient }) => {
     const renderCampaignList = () => <CampaignList apiClient={apiClient}/>;
