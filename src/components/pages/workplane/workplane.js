@@ -6,8 +6,8 @@ import './workplane.css';
 import CampaignList from '../campaign-list';
 import NewEditCampaign from '../new-edit-campaign';
 
-const Workplane = ({ className, apiClient }) => {
-    const renderCampaignList = () => <CampaignList apiClient={apiClient}/>;
+const Workplane = ({ className }) => {
+    const renderCampaignList = () => <CampaignList/>;
     return (
         <div className={`Workplane ${className}`}>
             <div>

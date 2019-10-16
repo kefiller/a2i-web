@@ -6,13 +6,6 @@ import Sidebar from '../pages/sidebar';
 import Workplane from '../pages/workplane';
 import Footer from '../pages/footer';
 
-import CCSAPiService from '../../services/ccs-api-service';
-
-const apiClient = new CCSAPiService({
-  url: '/api/v1/',
-  auth: 'uyLH5PA0MngNyRaPQvr386SOSUiXU8'
-});
-
 function App() {
   return (
     <div className="App">
@@ -20,7 +13,7 @@ function App() {
         <Header />
         <div className="mainplane row" >
           <Sidebar  className="col-2"/>
-          <Workplane className="col-10" apiClient={apiClient}/>
+          <Workplane className="col-10"/>
         </div>
         <Footer />
       </div>

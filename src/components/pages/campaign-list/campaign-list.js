@@ -1,22 +1,21 @@
 import React from 'react';
+import { connect } from 'react-redux';
 //faArrowUp
 import { faArrowDown } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
-export default class CampaignList extends React.Component {
+import Spinner from '../../spinner';
 
-    spinner = (
-        <div className="spinner-border text-dark" role="status">
-            <span className="sr-only">Loading...</span>
-        </div>
-    );
+import withCcsApiService from '../../hoc';
+
+class CampaignList extends React.Component {
 
     arrowDown = <FontAwesomeIcon icon={faArrowDown} color="green" />;
 
     campaignsWhenLoading = [{
-        name: this.spinner,
-        status: this.spinner,
-        lastStatusUpdate: this.spinner,
+        name: <Spinner/>,
+        status: <Spinner/>,
+        lastStatusUpdate: <Spinner/>,
         actions: this.arrowDown
     }];
 
@@ -39,8 +38,8 @@ export default class CampaignList extends React.Component {
         const campaigns = receivedCampaigns.map((campaign) => {
             return {
                 name: campaign,
-                status: this.spinner,
-                lastStatusUpdate: this.spinner,
+                status: <Spinner/>,
+                lastStatusUpdate: <Spinner/>,
                 actions: this.arrowDown
             }
         });
@@ -120,3 +119,11 @@ const CampaignListTable = ({ campaigns = [] }) => {
 
     );
 }
+
+const mapStateToProps = (state) => {
+    return {
+        campaigns: state.campaigns 
+    };
+}
+
+export default withCcsApiService(connect(mapStateToProps)(CampaignList));
