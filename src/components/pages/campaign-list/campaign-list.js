@@ -7,6 +7,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Spinner from '../../spinner';
 
 import withCcsApiService from '../../hoc';
+import { fetchCampaigns } from '../../../actions';
 
 class CampaignList extends React.Component {
 
@@ -30,7 +31,7 @@ class CampaignList extends React.Component {
         const { campaigns: receivedCampaigns } = data;
 
         receivedCampaigns.forEach(campaign => {
-            this.props.apiClient.a2iCampaignStatus(campaign).then((statusData) => {
+            this.props.ccsApiService.a2iCampaignStatus(campaign).then((statusData) => {
                 this.loadCampaignStatusComplete(campaign, statusData);
             });
         });
@@ -73,9 +74,12 @@ class CampaignList extends React.Component {
     }
 
     componentDidMount() {
-        const { apiClient } = this.props;
 
-        apiClient.a2iCampaignList()
+        this.props.fetchCampaigns();
+        
+        const { ccsApiService } = this.props;
+
+        ccsApiService.a2iCampaignList()
             .then(this.loadCampaignListComplete)
             .catch(this.loadCampaignListError);
     }
@@ -126,4 +130,10 @@ const mapStateToProps = (state) => {
     };
 }
 
-export default withCcsApiService(connect(mapStateToProps)(CampaignList));
+const mapDispatchToProps = (dispatch, { ccsApiService}) => {
+    return {
+        fetchCampaigns: fetchCampaigns(dispatch, ccsApiService),
+    };
+}
+
+export default withCcsApiService(connect(mapStateToProps, mapDispatchToProps)(CampaignList));

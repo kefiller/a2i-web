@@ -17,6 +17,10 @@ const ccsApiService = new CcsApiService ({
     auth: 'uyLH5PA0MngNyRaPQvr386SOSUiXU8'
 });
 
+store.subscribe(() => {
+    console.log(store.getState());
+});
+
 ReactDOM.render((
     <Provider store={store} >
         <ErrorBoundry>

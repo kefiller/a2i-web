@@ -8,7 +8,7 @@ const withCcsApiService = (Wrapped) => (props) => {
             {
                 (ccsApiService) => {
                     return (
-                        <Wrapped {...props} apiClient={ccsApiService} />
+                        <Wrapped {...props} ccsApiService={ccsApiService} />
                     );
                 }
             }
