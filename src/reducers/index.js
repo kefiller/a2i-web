@@ -3,7 +3,7 @@ import * as actionTypes from '../actions/actionTypes';
 const initialState = {
     campaigns: {
         list: [],
-        loading: false,
+        loading: true,
         error: false
     }
 };

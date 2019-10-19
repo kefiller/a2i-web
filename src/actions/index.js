@@ -1,4 +1,5 @@
 import * as actionTypes from './actionTypes';
+import CampaignSettintsTpl from './campaign-settings-tpl';
 
 export const fetchCampaignsRequest = () => {
     return {
@@ -34,6 +35,7 @@ const loadCampaignsStatuses = (ccsApiService, dispatch) => ({ campaigns }) => {
         });
     });
     Promise.all(promises).then(() => {
+        // console.log(campaignStatuses);
         dispatch(fetchCampaignsSuccess(campaignStatuses));
     });
 }
@@ -45,3 +47,7 @@ export const fetchCampaigns = (dispatch, ccsApiService) => () => {
             dispatch(fetchCampaignsError(error));
         });
 }
+
+export {
+    CampaignSettintsTpl
+};
