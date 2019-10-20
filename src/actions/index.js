@@ -48,6 +48,13 @@ export const fetchCampaigns = (dispatch, ccsApiService) => () => {
         });
 }
 
-export {
-    CampaignSettintsTpl
-};
+export const setCurrentCampaignSettings = (settings) => {
+    return {
+        type: actionTypes.SET_CURRENT_CAMPAIGN_SETTINGS,
+        payload: settings
+    };
+}
+
+export const setCurrentCampaignNewSettings = (dispatch) => () => {
+    dispatch(setCurrentCampaignSettings(CampaignSettintsTpl));
+}

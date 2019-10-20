@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 
 import Spinner from '../../spinner';
 
-import withCcsApiService from '../../hoc';
+import withCcsApiService from '../../hoc/with-ccs-api-cervice';
 import { fetchCampaigns } from '../../../actions';
 import ErrorIndicator from '../../error-indicator';
 

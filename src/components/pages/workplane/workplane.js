@@ -4,7 +4,7 @@ import { Route } from "react-router-dom";
 import './workplane.css';
 
 import CampaignList from '../campaign-list';
-import NewEditCampaign from '../new-edit-campaign';
+import EditCampaignSettingsContainer from '../edit-campaign-settings';
 
 const Workplane = ({ className }) => {
     const renderCampaignList = () => <CampaignList/>;
@@ -13,7 +13,7 @@ const Workplane = ({ className }) => {
             <div>
                 <Route path="/" exact render={renderCampaignList} />
                 <Route path="/CampaignList" render={renderCampaignList} />
-                <Route path="/NewCampaign" component={NewEditCampaign} />
+                <Route path="/NewCampaign" component={EditCampaignSettingsContainer} />
                 <Route path="/Logout" component={NotImplementedYet} />
             </div>
         </div>

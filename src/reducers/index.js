@@ -5,6 +5,11 @@ const initialState = {
         list: [],
         loading: true,
         error: false
+    },
+    currentCampaign: {
+        settings: [],
+        loading: true,
+        error: false
     }
 };
 
@@ -35,6 +40,16 @@ export const reducer = (state = initialState, action) => {
                     list: [],
                     loading: false,
                     error: action.payload
+                }
+            };
+        case actionTypes.SET_CURRENT_CAMPAIGN_SETTINGS:
+           
+            return {
+                ...state,
+                currentCampaign: {
+                    settings: action.payload,
+                    loading: false,
+                    error: false
                 }
             };
         default:

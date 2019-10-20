@@ -1,8 +1,7 @@
 import React from 'react';
-import { CampaignSettintsTpl } from '../../../actions';
 
-const NewEditCampaign = (props) => {
-    const fieldsHtml = CampaignSettintsTpl.map((field) => {
+const EditCampaignSettings = ({settings}) => {
+    const fieldsHtml = settings.map((field) => {
         return (
             <div className='form-group row' key={field.name}>
                 <label htmlFor={field.name} className='col-sm-4 col-form-label col-form-label-sm' >{field.label}</label>
@@ -17,6 +16,7 @@ const NewEditCampaign = (props) => {
         e.preventDefault();
         console.log(e);
     }
+
     return (
         <div className="container-fluid">
             <div className="row">
@@ -36,4 +36,4 @@ const NewEditCampaign = (props) => {
     );
 };
 
-export default NewEditCampaign;
+export default EditCampaignSettings;
