@@ -1,4 +1,6 @@
 import React from 'react';
+import { withRouter } from 'react-router-dom';
+import { compose } from 'redux';
 import { connect } from 'react-redux';
 
 import Spinner from '../../spinner';
@@ -37,10 +39,15 @@ const mapStateToProps = ({campaigns}) => {
     };
 }
 
-const mapDispatchToProps = (dispatch, { ccsApiService}) => {
+const mapDispatchToProps = (dispatch, {ccsApiService, history}) => {
     return {
-        fetchCampaigns: fetchCampaigns(dispatch, ccsApiService),
+        fetchCampaigns: fetchCampaigns(dispatch, ccsApiService, history),
     };
 }
 
-export default withCcsApiService(connect(mapStateToProps, mapDispatchToProps)(CampaignList));
+// export default withCcsApiService(connect(mapStateToProps, mapDispatchToProps)(CampaignList));
+export default compose(
+    withRouter,
+    withCcsApiService,
+    connect(mapStateToProps, mapDispatchToProps)
+)(CampaignList);

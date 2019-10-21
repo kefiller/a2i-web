@@ -1,6 +1,8 @@
 import React from 'react';
 
-const EditCampaignSettings = ({settings}) => {
+const EditCampaignSettings = (props) => {
+    const {settings, onSubmit, mode} = props;
+
     const fieldsHtml = settings.map((field) => {
         return (
             <div className='form-group row' key={field.name}>
@@ -12,10 +14,13 @@ const EditCampaignSettings = ({settings}) => {
             </div>
         );
     });
-    const onSubmit = (e) => {
+    const onClickSubmit = (e) => {
         e.preventDefault();
-        console.log(e);
+        // console.log(e);
+        onSubmit(e);
     }
+
+    const submitBtnCaption = mode === 'new'?'Создать':'Изменить';
 
     return (
         <div className="container-fluid">
@@ -25,7 +30,7 @@ const EditCampaignSettings = ({settings}) => {
                         {fieldsHtml}
                         <div className="form-group row">
                             <div className="col-sm-10">
-                                <button type="submit" className="btn btn-primary" onClick={onSubmit}>Создать</button>
+                                <button type="submit" className="btn btn-primary" onClick={onClickSubmit}>{submitBtnCaption}</button>
                             </div>
                         </div>
                     </form>

@@ -7,12 +7,11 @@ import CampaignList from '../campaign-list';
 import EditCampaignSettingsContainer from '../edit-campaign-settings';
 
 const Workplane = ({ className }) => {
-    const renderCampaignList = () => <CampaignList/>;
     return (
         <div className={`Workplane ${className}`}>
             <div>
-                <Route path="/" exact render={renderCampaignList} />
-                <Route path="/CampaignList" render={renderCampaignList} />
+                <Route path="/" exact component={CampaignList} />
+                <Route path="/CampaignList" component={CampaignList} />
                 <Route path="/NewCampaign" component={EditCampaignSettingsContainer} />
                 <Route path="/Logout" component={NotImplementedYet} />
             </div>

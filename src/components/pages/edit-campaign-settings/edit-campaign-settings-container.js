@@ -1,8 +1,9 @@
 import { compose } from 'redux';
 import { connect } from 'react-redux';
+import { withRouter } from 'react-router-dom';
 
 import EditCampaignSettings from './edit-campaign-settings';
-import { setCurrentCampaignNewSettings } from '../../../actions';
+import { setCurrentNewCampaign, createNewCampaign } from '../../../actions';
 import withStdContainer from '../../hoc/with-std-container';
 
 const mapStateToProps = ({ currentCampaign }) => {
@@ -11,13 +12,15 @@ const mapStateToProps = ({ currentCampaign }) => {
     }
 }
 
-const mapDispatchToProps = (dispatch, { ccsApiService }) => {
+const mapDispatchToProps = (dispatch, { ccsApiService, history }) => {
     return {
-        onMount: setCurrentCampaignNewSettings(dispatch, ccsApiService),
+        onMount: setCurrentNewCampaign(dispatch),
+        onSubmit: createNewCampaign(dispatch, ccsApiService, history)
     };
 }
 
 export default compose(
+    withRouter,
     connect(mapStateToProps, mapDispatchToProps),
     withStdContainer,
 )(EditCampaignSettings);

@@ -55,6 +55,28 @@ export const setCurrentCampaignSettings = (settings) => {
     };
 }
 
-export const setCurrentCampaignNewSettings = (dispatch) => () => {
+export const setCurrentCampaignData = (data) => {
+    return {
+        type: actionTypes.SET_CURRENT_CAMPAIGN_DATA,
+        payload: data
+    };
+}
+
+export const setCurrentCampaignMode = (mode) => {
+    return {
+        type: actionTypes.SET_CURRENT_CAMPAIGN_MODE,
+        payload: mode
+    };
+}
+
+export const setCurrentNewCampaign = (dispatch) => () => {
     dispatch(setCurrentCampaignSettings(CampaignSettintsTpl));
+    dispatch(setCurrentCampaignData([]));
+    dispatch(setCurrentCampaignMode(actionTypes.CAMPAIGN_MODE_EDIT));
+}
+
+export const createNewCampaign = (dispatch, ccsApiService, history) => () => {
+    console.log('Hi from actions!');
+    
+    history.push('/');
 }

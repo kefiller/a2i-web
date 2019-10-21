@@ -7,8 +7,11 @@ const initialState = {
         error: false
     },
     currentCampaign: {
+        name: '',
         settings: [],
-        loading: true,
+        data: [],
+        mode: 'new', // new or edit
+        loading: false,
         error: false
     }
 };
@@ -43,13 +46,27 @@ export const reducer = (state = initialState, action) => {
                 }
             };
         case actionTypes.SET_CURRENT_CAMPAIGN_SETTINGS:
-           
             return {
                 ...state,
                 currentCampaign: {
+                    ...state.currentCampaign,
                     settings: action.payload,
-                    loading: false,
-                    error: false
+                }
+            };
+        case actionTypes.SET_CURRENT_CAMPAIGN_DATA:
+            return {
+                ...state,
+                currentCampaign: {
+                    ...state.currentCampaign,
+                    data: action.payload,
+                }
+            };
+        case actionTypes.SET_CURRENT_CAMPAIGN_MODE:
+            return {
+                ...state,
+                currentCampaign: {
+                    ...state.currentCampaign,
+                    mode: action.payload,
                 }
             };
         default:
