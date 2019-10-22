@@ -1,5 +1,4 @@
 import * as actionTypes from './actionTypes';
-import CampaignSettintsTpl from './campaign-settings-tpl';
 
 export const fetchCampaignsRequest = () => {
     return {
@@ -48,6 +47,13 @@ export const fetchCampaigns = (dispatch, ccsApiService) => () => {
         });
 }
 
+export const setCurrentCampaignName = (name) => {
+    return {
+        type: actionTypes.SET_CURRENT_CAMPAIGN_NAME,
+        payload: name
+    };
+}
+
 export const setCurrentCampaignSettings = (settings) => {
     return {
         type: actionTypes.SET_CURRENT_CAMPAIGN_SETTINGS,
@@ -62,21 +68,16 @@ export const setCurrentCampaignData = (data) => {
     };
 }
 
-export const setCurrentCampaignMode = (mode) => {
-    return {
-        type: actionTypes.SET_CURRENT_CAMPAIGN_MODE,
-        payload: mode
-    };
-}
-
 export const setCurrentNewCampaign = (dispatch) => () => {
-    dispatch(setCurrentCampaignSettings(CampaignSettintsTpl));
+    dispatch(setCurrentCampaignName(''));
+    dispatch(setCurrentCampaignSettings([]));
     dispatch(setCurrentCampaignData([]));
-    dispatch(setCurrentCampaignMode(actionTypes.CAMPAIGN_MODE_EDIT));
 }
 
 export const createNewCampaign = (dispatch, ccsApiService, history) => () => {
-    console.log('Hi from actions!');
-    
-    history.push('/');
+    ccsApiService.a2iCampaignCreate( /*name, settings */)
+    .then(() => {history.push('/')})
+    .catch((error) => {
+        console.log('a2iCampaignCreate error', error);
+    });
 }

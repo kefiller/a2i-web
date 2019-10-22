@@ -45,6 +45,14 @@ export const reducer = (state = initialState, action) => {
                     error: action.payload
                 }
             };
+        case actionTypes.SET_CURRENT_CAMPAIGN_NAME:
+            return {
+                ...state,
+                currentCampaign: {
+                    ...state.currentCampaign,
+                    name: action.payload,
+                }
+            };
         case actionTypes.SET_CURRENT_CAMPAIGN_SETTINGS:
             return {
                 ...state,
@@ -59,14 +67,6 @@ export const reducer = (state = initialState, action) => {
                 currentCampaign: {
                     ...state.currentCampaign,
                     data: action.payload,
-                }
-            };
-        case actionTypes.SET_CURRENT_CAMPAIGN_MODE:
-            return {
-                ...state,
-                currentCampaign: {
-                    ...state.currentCampaign,
-                    mode: action.payload,
                 }
             };
         default:
