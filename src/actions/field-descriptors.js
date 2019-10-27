@@ -1,6 +1,5 @@
 const notEmptyValidator = (value) => {
-    console.log('notEmptyValidator', value);
-    
+    // console.log('notEmptyValidator', value);
     return value.length !== 0;
 }
 
