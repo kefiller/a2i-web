@@ -74,8 +74,8 @@ export const setCurrentNewCampaign = (dispatch) => () => {
     dispatch(setCurrentCampaignData([]));
 }
 
-export const createNewCampaign = (dispatch, ccsApiService, history) => () => {
-    ccsApiService.a2iCampaignCreate( /*name, settings */)
+export const createNewCampaign = (dispatch, ccsApiService, history) => (name, settings) => {
+    ccsApiService.a2iCampaignCreate(name, settings)
     .then(() => {history.push('/')})
     .catch((error) => {
         console.log('a2iCampaignCreate error', error);

@@ -17,6 +17,7 @@ export default class EditCampaignSettings extends React.Component {
             const {validator, defaultValue = ''} = fieldUnvalidated;
             return  {
                 ...fieldUnvalidated,
+                value: defaultValue,
                 valid: validator(defaultValue)
             }
         });
@@ -36,6 +37,7 @@ export default class EditCampaignSettings extends React.Component {
         const changedField = fields.filter(field => field.name === fieldName)[0];
         const changedFieldIndex = fields.indexOf(changedField);
         changedField.valid = changedField.validator(value);
+        changedField.value = value;
 
         const newFields = [
             ...fields.slice(0,changedFieldIndex),
@@ -63,18 +65,29 @@ export default class EditCampaignSettings extends React.Component {
             </div>
         );
     }
+
+    getCampaignName = () => {
+        return  this.state.fields.find(field => field.name === 'campaignName').value;
+    }
+
+    getSettings = () => {
+        const settings = {};
+        this.state.fields.filter(field => field.name !== 'campaignName').forEach(({name, value}) => {
+            settings[name] = value;
+        })
+        return settings;
+    }
     
     render = () => {
         if (isEmpty(this.state)) return null;
 
         const { fields } = this.state;
-        const { onSubmit, submitCaption } = this.props;
+        const { onSubmit, submitCaption,  } = this.props;
 
         const fieldsHtml = fields.map(this.field2Html);
         const onClickSubmit = (e) => {
             e.preventDefault();
-            // console.log(e);
-            onSubmit(e);
+            onSubmit(this.getCampaignName(), this.getSettings());
         }
 
         const submitDisabled = this.areAllFieldsValid() ? null : "disabled";

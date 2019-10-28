@@ -15,7 +15,7 @@ export const CampaignNameField =     {
 export const CampaignSettintsFields  = [
     {
         label: 'msg-template',
-        name: '',
+        name: 'msg-template',
         type: 'text',
         required: true, // eslint-disable-next-line
         desc: '"Привет ${number}, вы должны ${debt} денежек" - шаблон сообщения',
@@ -70,7 +70,7 @@ export const CampaignSettintsFields  = [
         name: 'amount',
         type: 'text',
         required: true,
-        defaultValue: 'mon-sun',
+        defaultValue: '1',
         desc: 'общее кол-во звонков, которое должно быть совершено',
         validator: notEmptyValidator,
     },
