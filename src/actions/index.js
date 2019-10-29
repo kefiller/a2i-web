@@ -68,16 +68,41 @@ export const setCurrentCampaignData = (data) => {
     };
 }
 
+export const setCurrentCampaignError = (error) => {
+    return {
+        type: actionTypes.SET_CURRENT_CAMPAIGN_ERROR,
+        payload: error
+    };
+}
+
 export const setCurrentNewCampaign = (dispatch) => () => {
     dispatch(setCurrentCampaignName(''));
     dispatch(setCurrentCampaignSettings([]));
     dispatch(setCurrentCampaignData([]));
 }
 
+export const clearCurrentCampaignError = (dispatch) => () => {
+    dispatch(setCurrentCampaignError(false));
+}
+
+const getCampaignNameFromField = field => field.value;
+
+const getCampaignSettingsFromFields = (fields) => {
+    const settings = {};
+    fields.forEach(({name, value}) => {
+        settings[name] = value;
+    })
+    return settings;
+}
+
 export const createNewCampaign = (dispatch, ccsApiService, history) => (name, settings) => {
-    ccsApiService.a2iCampaignCreate(name, settings)
-    .then(() => {history.push('/')})
+    dispatch(setCurrentCampaignName(getCampaignNameFromField(name)));
+    dispatch(setCurrentCampaignSettings(settings));
+
+    ccsApiService.a2iCampaignCreate(getCampaignNameFromField(name), getCampaignSettingsFromFields(settings))
+    .then(() => {history.push('/CampaignList')})
     .catch((error) => {
         console.log('a2iCampaignCreate error', error);
+        dispatch(setCurrentCampaignError(error.message));
     });
 }

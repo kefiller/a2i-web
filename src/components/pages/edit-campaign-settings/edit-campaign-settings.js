@@ -1,5 +1,5 @@
 import React from 'react';
-import {isEmpty} from 'ramda';
+import { isEmpty } from 'ramda';
 
 
 export default class EditCampaignSettings extends React.Component {
@@ -7,21 +7,22 @@ export default class EditCampaignSettings extends React.Component {
     }
 
     componentDidMount = () => {
-        const {campaignName:campaignField, settings:settingsFields} = this.props;
+        const { campaignName: campaignField, settings: settingsFields, onMount } = this.props;
         const fieldsUnvalidated = [
-            {...campaignField },
+            { ...campaignField },
             ...settingsFields
         ];
 
         const fields = fieldsUnvalidated.map((fieldUnvalidated) => {
-            const {validator, defaultValue = ''} = fieldUnvalidated;
-            return  {
+            const { validator, defaultValue = '' } = fieldUnvalidated;
+            return {
                 ...fieldUnvalidated,
                 value: defaultValue,
                 valid: validator(defaultValue)
             }
         });
 
+        onMount();
         this.setState({
             fields
         });
@@ -32,7 +33,7 @@ export default class EditCampaignSettings extends React.Component {
     }
 
     setFieldValue = (fieldName, value) => {
-        const {fields} = this.state;
+        const { fields } = this.state;
 
         const changedField = fields.filter(field => field.name === fieldName)[0];
         const changedFieldIndex = fields.indexOf(changedField);
@@ -40,7 +41,7 @@ export default class EditCampaignSettings extends React.Component {
         changedField.value = value;
 
         const newFields = [
-            ...fields.slice(0,changedFieldIndex),
+            ...fields.slice(0, changedFieldIndex),
             changedField,
             ...fields.slice(changedFieldIndex + 1),
         ]
@@ -52,7 +53,7 @@ export default class EditCampaignSettings extends React.Component {
 
     field2Html = (field) => {
         const { name, type, label, defaultValue, required, desc } = field;
-    
+
         return (
             <div className='form-group row' key={name}>
                 <label htmlFor={name} className='col-sm-4 col-form-label col-form-label-sm' >{label}</label>
@@ -67,22 +68,18 @@ export default class EditCampaignSettings extends React.Component {
     }
 
     getCampaignName = () => {
-        return  this.state.fields.find(field => field.name === 'campaignName').value;
+        return this.state.fields.find(field => field.name === 'campaignName');
     }
 
     getSettings = () => {
-        const settings = {};
-        this.state.fields.filter(field => field.name !== 'campaignName').forEach(({name, value}) => {
-            settings[name] = value;
-        })
-        return settings;
+        return this.state.fields.filter(field => field.name !== 'campaignName');
     }
-    
+
     render = () => {
         if (isEmpty(this.state)) return null;
 
         const { fields } = this.state;
-        const { onSubmit, submitCaption,  } = this.props;
+        const { onSubmit, submitCaption, } = this.props;
 
         const fieldsHtml = fields.map(this.field2Html);
         const onClickSubmit = (e) => {

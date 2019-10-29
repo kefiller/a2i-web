@@ -69,6 +69,14 @@ export const reducer = (state = initialState, action) => {
                     data: action.payload,
                 }
             };
+        case actionTypes.SET_CURRENT_CAMPAIGN_ERROR:
+            return {
+                ...state,
+                currentCampaign: {
+                    ...state.currentCampaign,
+                    error: action.payload,
+                }
+            };
         default:
             return state;
     }
