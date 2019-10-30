@@ -26,12 +26,12 @@ const loadCampaignsStatuses = (ccsApiService, dispatch) => ({ campaigns }) => {
 
     const promises = campaigns.map(campaign => {
         return ccsApiService.a2iCampaignStatus(campaign)
-        .then((data) => {
-            campaignStatuses.push({ name: campaign, ...data });
-        })
-        .catch((error) => {
-            dispatch(fetchCampaignsError(error));
-        });
+            .then((data) => {
+                campaignStatuses.push({ name: campaign, ...data });
+            })
+            .catch((error) => {
+                dispatch(fetchCampaignsError(error));
+            });
     });
     Promise.all(promises).then(() => {
         // console.log(campaignStatuses);
@@ -89,7 +89,7 @@ const getCampaignNameFromField = field => field.value;
 
 const getCampaignSettingsFromFields = (fields) => {
     const settings = {};
-    fields.forEach(({name, value}) => {
+    fields.forEach(({ name, value }) => {
         settings[name] = value;
     })
     return settings;
@@ -100,9 +100,22 @@ export const createNewCampaign = (dispatch, ccsApiService, history) => (name, se
     dispatch(setCurrentCampaignSettings(settings));
 
     ccsApiService.a2iCampaignCreate(getCampaignNameFromField(name), getCampaignSettingsFromFields(settings))
-    .then(() => {history.push('/CampaignList')})
-    .catch((error) => {
-        console.log('a2iCampaignCreate error', error);
-        dispatch(setCurrentCampaignError(error.message));
-    });
+        .then(() => { history.push('/CampaignData') })
+        .catch((error) => {
+            console.log('a2iCampaignCreate error', error);
+            dispatch(setCurrentCampaignError(error.message));
+        });
 }
+
+export const getCampaignData = (dispatch, ccsApiService) => (campaignName) => {
+    ccsApiService.a2iCampaignDataGet(campaignName)
+        .then((data) => {
+            console.log(data);
+        })
+        .catch((error) => {
+            console.log('getCampaignData', error);
+            dispatch(setCurrentCampaignError(error.message));
+        });
+}
+
+

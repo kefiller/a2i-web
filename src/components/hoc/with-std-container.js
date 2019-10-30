@@ -5,7 +5,7 @@ import ErrorIndicator from '../error-indicator';
 
 class StdContainer extends React.Component {
     componentDidMount() {
-        if (this.props.onMount) this.props.onMount();
+        // if (this.props.onMount) this.props.onMount();
     }
 
     render() {

@@ -5,6 +5,7 @@ import './workplane.css';
 
 import CampaignList from '../campaign-list';
 import EditCampaignSettingsContainer from '../edit-campaign-settings';
+import CampaignData from '../campaign-data/campaign-data-container';
 import ErrorIndicator from '../../error-indicator';
 
 const Workplane = ({ className }) => {
@@ -13,6 +14,7 @@ const Workplane = ({ className }) => {
             <div>
                 <Route path="/" exact component={CampaignList} />
                 <Route path="/CampaignList" component={CampaignList} />
+                <Route path="/CampaignData" component={CampaignData} />
                 <Route path="/NewCampaign" component={EditCampaignSettingsContainer} />
                 <Route path="/Logout" component={NotImplementedYet} />
                 <Route path="/Error" component={ErrorIndicator} />
