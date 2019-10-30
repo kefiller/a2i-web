@@ -77,6 +77,14 @@ export const reducer = (state = initialState, action) => {
                     error: action.payload,
                 }
             };
+        case actionTypes.SET_CURRENT_CAMPAIGN_LOADING:
+            return {
+                ...state,
+                currentCampaign: {
+                    ...state.currentCampaign,
+                    loading: action.payload,
+                }
+            };
         default:
             return state;
     }

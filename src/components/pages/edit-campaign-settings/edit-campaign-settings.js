@@ -22,7 +22,7 @@ export default class EditCampaignSettings extends React.Component {
             }
         });
 
-        onMount();
+        // onMount();
         this.setState({
             fields
         });

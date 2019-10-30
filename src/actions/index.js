@@ -75,6 +75,13 @@ export const setCurrentCampaignError = (error) => {
     };
 }
 
+export const setCurrentCampaignLoading = (loading) => {
+    return {
+        type: actionTypes.SET_CURRENT_CAMPAIGN_LOADING,
+        payload: loading
+    };
+}
+
 export const setCurrentNewCampaign = (dispatch) => () => {
     dispatch(setCurrentCampaignName(''));
     dispatch(setCurrentCampaignSettings([]));
@@ -96,26 +103,43 @@ const getCampaignSettingsFromFields = (fields) => {
 }
 
 export const createNewCampaign = (dispatch, ccsApiService, history) => (name, settings) => {
-    dispatch(setCurrentCampaignName(getCampaignNameFromField(name)));
-    dispatch(setCurrentCampaignSettings(settings));
-
-    ccsApiService.a2iCampaignCreate(getCampaignNameFromField(name), getCampaignSettingsFromFields(settings))
-        .then(() => { history.push('/CampaignData') })
-        .catch((error) => {
-            console.log('a2iCampaignCreate error', error);
-            dispatch(setCurrentCampaignError(error.message));
-        });
-}
-
-export const getCampaignData = (dispatch, ccsApiService) => (campaignName) => {
-    ccsApiService.a2iCampaignDataGet(campaignName)
+    dispatch(setCurrentCampaignLoading(true));
+    ccsApiService.a2iCampaignDataGet('kstovo_prioksky_debt_30102019')
         .then((data) => {
+            dispatch(setCurrentCampaignLoading(false));
             console.log(data);
         })
         .catch((error) => {
+            dispatch(setCurrentCampaignLoading(false));
             console.log('getCampaignData', error);
             dispatch(setCurrentCampaignError(error.message));
         });
+    history.push('/CampaignData');
+
+    // const campaignName = getCampaignNameFromField(name);
+
+    // dispatch(setCurrentCampaignName(campaignName));
+    // dispatch(setCurrentCampaignSettings(settings));
+
+    // ccsApiService.a2iCampaignCreate(campaignName, getCampaignSettingsFromFields(settings))
+    //     .then(() => {
+    //         dispatch(setCurrentCampaignLoading(true));
+    //         ccsApiService.a2iCampaignDataGet(campaignName)
+    //             .then((data) => {
+    //                 dispatch(setCurrentCampaignLoading(false));
+    //                 console.log(data);
+    //             })
+    //             .catch((error) => {
+    //                 dispatch(setCurrentCampaignLoading(false));
+    //                 console.log('getCampaignData', error);
+    //                 dispatch(setCurrentCampaignError(error.message));
+    //             });
+    //         history.push('/CampaignData');
+    //     })
+    //     .catch((error) => {
+    //         console.log('a2iCampaignCreate error', error);
+    //         dispatch(setCurrentCampaignError(error.message));
+    //     });
 }
 
 

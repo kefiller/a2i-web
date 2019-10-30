@@ -7,10 +7,11 @@ export default class CampaignData extends React.Component {
     state = {}
 
     componentDidMount = () => {
+        console.log(this.props);
         //const {name:campaignName} = this.props;
         const {onMount} = this.props;
-        const campaignName = 'mytestcampaign_01';
-        onMount(campaignName);
+        const campaignName = 'kstovo_prioksky_debt_30102019';
+        // onMount(campaignName);
     }
 
     render = () => {
@@ -29,14 +30,14 @@ export default class CampaignData extends React.Component {
         const rows = null;
         return (
             <table className="table">
-                <thead>
+                {/* <thead>
                     <tr>
                         <th scope="col">Campaign</th>
                         <th scope="col">Status</th>
                         <th scope="col">LastStatusUpdate</th>
                         <th scope="col">Actions</th>
                     </tr>
-                </thead>
+                </thead> */}
                 <tbody>
                     {rows}
                 </tbody>
