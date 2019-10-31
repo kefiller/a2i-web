@@ -102,12 +102,20 @@ const getCampaignSettingsFromFields = (fields) => {
     return settings;
 }
 
+const getComponentCampaignData = data => Object.keys(data.data);
+
 export const createNewCampaign = (dispatch, ccsApiService, history) => (name, settings) => {
+    // const campaignName = getCampaignNameFromField(name);
+    const campaignName = 'kstovo_prioksky_debt_30102019';
+
+    dispatch(setCurrentCampaignName(campaignName));
+    dispatch(setCurrentCampaignSettings(settings));
+
     dispatch(setCurrentCampaignLoading(true));
-    ccsApiService.a2iCampaignDataGet('kstovo_prioksky_debt_30102019')
+    ccsApiService.a2iCampaignDataGet(campaignName)
         .then((data) => {
+            dispatch(setCurrentCampaignData(getComponentCampaignData(data)));
             dispatch(setCurrentCampaignLoading(false));
-            console.log(data);
         })
         .catch((error) => {
             dispatch(setCurrentCampaignLoading(false));
@@ -115,11 +123,6 @@ export const createNewCampaign = (dispatch, ccsApiService, history) => (name, se
             dispatch(setCurrentCampaignError(error.message));
         });
     history.push('/CampaignData');
-
-    // const campaignName = getCampaignNameFromField(name);
-
-    // dispatch(setCurrentCampaignName(campaignName));
-    // dispatch(setCurrentCampaignSettings(settings));
 
     // ccsApiService.a2iCampaignCreate(campaignName, getCampaignSettingsFromFields(settings))
     //     .then(() => {

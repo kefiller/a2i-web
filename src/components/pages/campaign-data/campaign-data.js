@@ -7,14 +7,12 @@ export default class CampaignData extends React.Component {
     state = {}
 
     componentDidMount = () => {
-        console.log(this.props);
-        //const {name:campaignName} = this.props;
-        const {onMount} = this.props;
-        const campaignName = 'kstovo_prioksky_debt_30102019';
-        // onMount(campaignName);
     }
 
     render = () => {
+        const {data} = this.props;
+        console.log(data);
+
         // const arrowDown = <FontAwesomeIcon icon={faArrowDown} color="green" />;
 
         // const rows = campaigns.map(({ name, status, lastStatusUpdate}, index) => {
