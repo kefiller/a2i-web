@@ -102,7 +102,15 @@ const getCampaignSettingsFromFields = (fields) => {
     return settings;
 }
 
-const getComponentCampaignData = data => Object.keys(data.data);
+const getComponentCampaignData = ({data}) => {
+    const res = Object.keys(data)
+        .map((num) => Object.keys(data[num])
+            .filter(attribName => attribName.substr(0,2) !== 'x-')
+            .map(attribName => data[num][attribName])
+        );
+    console.log(res);
+    return res;
+}
 
 export const createNewCampaign = (dispatch, ccsApiService, history) => (name, settings) => {
     // const campaignName = getCampaignNameFromField(name);
@@ -114,7 +122,7 @@ export const createNewCampaign = (dispatch, ccsApiService, history) => (name, se
     dispatch(setCurrentCampaignLoading(true));
     ccsApiService.a2iCampaignDataGet(campaignName)
         .then((data) => {
-            dispatch(setCurrentCampaignData(getComponentCampaignData(data)));
+            dispatch(setCurrentCampaignData(data.data));
             dispatch(setCurrentCampaignLoading(false));
         })
         .catch((error) => {

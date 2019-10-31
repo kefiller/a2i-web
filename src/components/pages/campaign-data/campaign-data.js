@@ -10,25 +10,24 @@ export default class CampaignData extends React.Component {
     }
 
     render = () => {
-        const {data} = this.props;
-        console.log(data);
+        const { name: campaignName, data } = this.props;
 
         // const arrowDown = <FontAwesomeIcon icon={faArrowDown} color="green" />;
 
-        // const rows = campaigns.map(({ name, status, lastStatusUpdate}, index) => {
-        //     return (
-        //         <tr key={name}>
-        //             <th scope="row">{name}</th>
-        //             <td>{status}</td>
-        //             <td>{lastStatusUpdate}</td>
-        //             <td>{arrowDown}</td>
-        //         </tr>
-        //     );
-        // });
-        const rows = null;
+        const rows = Object.keys(data).map((number, index) => {
+            return (
+                <tr key={index}>
+                    <th scope="row">{number}</th>
+                    {/* <td>{status}</td> */}
+                </tr>
+            );
+        });
+
         return (
-            <table className="table">
-                {/* <thead>
+            <React.Fragment>
+                <h2>{campaignName}</h2>
+                <table className="table">
+                    {/* <thead>
                     <tr>
                         <th scope="col">Campaign</th>
                         <th scope="col">Status</th>
@@ -36,10 +35,11 @@ export default class CampaignData extends React.Component {
                         <th scope="col">Actions</th>
                     </tr>
                 </thead> */}
-                <tbody>
-                    {rows}
-                </tbody>
-            </table>
+                    <tbody>
+                        {rows}
+                    </tbody>
+                </table>
+            </React.Fragment>
         );
     }
 
