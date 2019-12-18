@@ -1,4 +1,5 @@
 import * as actionTypes from './actionTypes';
+import { map } from 'lodash';
 
 export const fetchCampaignsRequest = () => {
     return {
@@ -21,30 +22,28 @@ export const fetchCampaignsError = (error) => {
     };
 }
 
-const loadCampaignsStatuses = (ccsApiService, dispatch) => ({ campaigns }) => {
-    const campaignStatuses = [];
-
-    const promises = campaigns.map(campaign => {
-        return ccsApiService.a2iCampaignStatus(campaign)
-            .then((data) => {
-                campaignStatuses.push({ name: campaign, ...data });
-            })
-            .catch((error) => {
-                dispatch(fetchCampaignsError(error));
-            });
-    });
-    Promise.all(promises).then(() => {
-        // console.log(campaignStatuses);
+const loadCampaignsStatuses = async (ccsApiService, dispatch) => {
+    try {
+        const result = await ccsApiService.a2iCampaignsInfo();
+        const campaignStatuses = map(result['info'], (val, key) => {
+            return {
+                name: key,
+                ...val
+            }
+        });
         dispatch(fetchCampaignsSuccess(campaignStatuses));
-    });
+    } catch(error) {
+        console.log('loadCampaignsStatuses error', error);
+        fetchCampaignsError(error);
+    }
 }
 
 export const fetchCampaigns = (dispatch, ccsApiService) => () => {
-    ccsApiService.a2iCampaignList()
-        .then(loadCampaignsStatuses(ccsApiService, dispatch))
-        .catch((error) => {
-            dispatch(fetchCampaignsError(error));
-        });
+    loadCampaignsStatuses(ccsApiService, dispatch);
+}
+
+export const goCampaignData = (dispatch, ccsApiService, history) => () => {
+
 }
 
 export const setCurrentCampaignName = (name) => {
@@ -102,55 +101,44 @@ const getCampaignSettingsFromFields = (fields) => {
     return settings;
 }
 
-const getComponentCampaignData = ({data}) => {
+const getComponentCampaignData = ({ data }) => {
     const res = Object.keys(data)
         .map((num) => Object.keys(data[num])
-            .filter(attribName => attribName.substr(0,2) !== 'x-')
+            .filter(attribName => attribName.substr(0, 2) !== 'x-')
             .map(attribName => data[num][attribName])
         );
     console.log(res);
     return res;
 }
 
-export const createNewCampaign = (dispatch, ccsApiService, history) => (name, settings) => {
-    // const campaignName = getCampaignNameFromField(name);
-    const campaignName = 'kstovo_prioksky_debt_30102019';
+export const createNewCampaign = (dispatch, ccsApiService, history) => async (name, settings) => {
+    const campaignName = getCampaignNameFromField(name);
+    // const campaignName = 'kstovo_prioksky_debt_30102019';
 
     dispatch(setCurrentCampaignName(campaignName));
     dispatch(setCurrentCampaignSettings(settings));
 
     dispatch(setCurrentCampaignLoading(true));
-    ccsApiService.a2iCampaignDataGet(campaignName)
-        .then((data) => {
-            dispatch(setCurrentCampaignData(data.data));
-            dispatch(setCurrentCampaignLoading(false));
-        })
-        .catch((error) => {
-            dispatch(setCurrentCampaignLoading(false));
-            console.log('getCampaignData', error);
-            dispatch(setCurrentCampaignError(error.message));
-        });
-    history.push('/CampaignData');
-
-    // ccsApiService.a2iCampaignCreate(campaignName, getCampaignSettingsFromFields(settings))
-    //     .then(() => {
-    //         dispatch(setCurrentCampaignLoading(true));
-    //         ccsApiService.a2iCampaignDataGet(campaignName)
-    //             .then((data) => {
-    //                 dispatch(setCurrentCampaignLoading(false));
-    //                 console.log(data);
-    //             })
-    //             .catch((error) => {
-    //                 dispatch(setCurrentCampaignLoading(false));
-    //                 console.log('getCampaignData', error);
-    //                 dispatch(setCurrentCampaignError(error.message));
-    //             });
-    //         history.push('/CampaignData');
+    // ccsApiService.a2iCampaignDataGet(campaignName)
+    //     .then((data) => {
+    //         dispatch(setCurrentCampaignData(data.data));
+    //         dispatch(setCurrentCampaignLoading(false));
     //     })
     //     .catch((error) => {
-    //         console.log('a2iCampaignCreate error', error);
+    //         dispatch(setCurrentCampaignLoading(false));
+    //         console.log('getCampaignData', error);
     //         dispatch(setCurrentCampaignError(error.message));
     //     });
+
+    try {
+        await ccsApiService.a2iCampaignCreate(campaignName, getCampaignSettingsFromFields(settings));
+        await ccsApiService.a2iCampaignDataGet(campaignName);
+    } catch (error) {
+        console.log('a2iCampaignCreate error', error);
+        dispatch(setCurrentCampaignError(error.message));
+    }
+    dispatch(setCurrentCampaignLoading(false));
+    history.push('/CampaignData');
 }
 
 

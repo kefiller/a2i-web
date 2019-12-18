@@ -6,7 +6,7 @@ import { connect } from 'react-redux';
 import Spinner from '../../spinner';
 
 import withCcsApiService from '../../hoc/with-ccs-api-cervice';
-import { fetchCampaigns } from '../../../actions';
+import { fetchCampaigns, goCampaignData } from '../../../actions';
 import ErrorIndicator from '../../error-indicator';
 
 import CampaignListTable from './campaign-list-table';
@@ -42,6 +42,7 @@ const mapStateToProps = ({campaigns}) => {
 const mapDispatchToProps = (dispatch, {ccsApiService, history}) => {
     return {
         fetchCampaigns: fetchCampaigns(dispatch, ccsApiService, history),
+        goCampaignData: goCampaignData(dispatch, ccsApiService, history),
     };
 }
 

@@ -1,4 +1,5 @@
 import React from 'react';
+import { NavLink } from "react-router-dom";
 //faArrowUp
 import { faArrowDown } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -11,7 +12,7 @@ const CampaignListTable = ({campaigns}) => {
     const rows = campaigns.map(({ name, status, lastStatusUpdate}, index) => {
         return (
             <tr key={name}>
-                <th scope="row">{name}</th>
+                <th scope="row"><NavLink className="nav-link" to="/CampaignData/">{name}</NavLink> </th>
                 <td>{status}</td>
                 <td>{lastStatusUpdate}</td>
                 <td>{arrowDown}</td>

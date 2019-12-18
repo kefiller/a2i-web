@@ -28,6 +28,7 @@ export default class CCSApiService {
         });
     }
 
+    
     a2iCampaignList = () => {
         return this.post({
             'method': 'a2i.campaign.list',
@@ -115,6 +116,16 @@ export default class CCSApiService {
                 resolve(status);
             })
             .catch(error => reject(error));
+        });
+    }
+
+    a2iCampaignsInfo = (campaigns = []) => {
+        return this.post({
+            'method': 'a2i.campaigns.info',
+            'auth': this.auth,
+            'params': {
+                campaigns
+            }
         });
     }
 

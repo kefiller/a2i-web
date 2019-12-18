@@ -13,7 +13,8 @@ import { store } from './store';
 import './index.css';
 
 const ccsApiService = new CcsApiService ({
-    url: '/api/v1/',
+    // url: '/api/v1/',
+    url: 'http://10.111.0.28:9009/api/v1/',
     auth: 'uyLH5PA0MngNyRaPQvr386SOSUiXU8'
 });
 
