@@ -17,7 +17,7 @@ class CampaignList extends React.Component {
     }
 
     render() {
-        const { campaigns: {loading, error, list} } = this.props;
+        const { campaigns: {loading, error, list}, goCampaignData} = this.props;
 
         if(loading) {
             return <Spinner/>;
@@ -28,7 +28,7 @@ class CampaignList extends React.Component {
         }
 
         return (
-            <CampaignListTable campaigns={list} />
+            <CampaignListTable campaigns={list} goCampaignData={goCampaignData} />
         );
     }
 }

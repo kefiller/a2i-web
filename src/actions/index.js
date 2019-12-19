@@ -32,7 +32,7 @@ const loadCampaignsStatuses = async (ccsApiService, dispatch) => {
             }
         });
         dispatch(fetchCampaignsSuccess(campaignStatuses));
-    } catch(error) {
+    } catch (error) {
         console.log('loadCampaignsStatuses error', error);
         fetchCampaignsError(error);
     }
@@ -42,8 +42,17 @@ export const fetchCampaigns = (dispatch, ccsApiService) => () => {
     loadCampaignsStatuses(ccsApiService, dispatch);
 }
 
-export const goCampaignData = (dispatch, ccsApiService, history) => () => {
-
+export const goCampaignData = (dispatch, ccsApiService, history) => async campaignName => {
+    history.push('/CampaignData');
+    try {
+        dispatch(setCurrentCampaignName(campaignName));
+        const {data = []} = await ccsApiService.a2iCampaignDataGet(campaignName);
+        dispatch(setCurrentCampaignData(data));
+        // console.log(campaignData);
+    } catch (error) {
+        console.log('goCampaignData error', error);
+        dispatch(setCurrentCampaignError(error.message));
+    }
 }
 
 export const setCurrentCampaignName = (name) => {

@@ -16,8 +16,9 @@ export default class CampaignData extends React.Component {
 
         const rows = Object.keys(data).map((number, index) => {
             return (
-                <tr key={index}>
-                    <th scope="row">{number}</th>
+                <tr className="row" key={index}>
+                    <th className="col-sm-1" scope="row"><input type="checkbox" /></th>
+                    <th className="col-sm-11" scope="row">{number}</th>
                     {/* <td>{status}</td> */}
                 </tr>
             );
@@ -26,19 +27,24 @@ export default class CampaignData extends React.Component {
         return (
             <React.Fragment>
                 <h2>{campaignName}</h2>
-                <table className="table">
-                    {/* <thead>
-                    <tr>
-                        <th scope="col">Campaign</th>
-                        <th scope="col">Status</th>
-                        <th scope="col">LastStatusUpdate</th>
-                        <th scope="col">Actions</th>
-                    </tr>
-                </thead> */}
-                    <tbody>
-                        {rows}
-                    </tbody>
-                </table>
+                <div className="container-fluid">
+                    <div className="row">
+                        <div className="col-sm-4">
+                            <table className="table">
+                                <thead>
+                                    <tr className="row">
+                                        <th scope="col" className="col-sm-1" ><input type="checkbox" /></th>
+                                        <th scope="col" className="col-sm-11">Number</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {rows}
+                                </tbody>
+                            </table>
+                        </div>
+                        <div className="col-sm-8"></div>
+                    </div>
+                </div>
             </React.Fragment>
         );
     }
