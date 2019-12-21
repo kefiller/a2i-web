@@ -1,5 +1,5 @@
 import * as actionTypes from './actionTypes';
-import { map } from 'lodash';
+import { map, pick } from 'lodash';
 
 export const fetchCampaignsRequest = () => {
     return {
@@ -47,8 +47,9 @@ export const goCampaignData = (dispatch, ccsApiService, history) => async campai
     try {
         dispatch(setCurrentCampaignName(campaignName));
         const {data = []} = await ccsApiService.a2iCampaignDataGet(campaignName);
-        dispatch(setCurrentCampaignData(data));
-        // console.log(campaignData);
+        const first100nums = map(data, (val, idx) => idx).slice(0,100);
+        const first100objs = pick(data, first100nums);
+        dispatch(setCurrentCampaignData(first100objs));
     } catch (error) {
         console.log('goCampaignData error', error);
         dispatch(setCurrentCampaignError(error.message));
