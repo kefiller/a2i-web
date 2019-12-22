@@ -7,14 +7,25 @@ export default class EditCampaignSettings extends React.Component {
     }
 
     componentDidMount = () => {
-        const { campaignName: campaignField, settings: settingsFields, onMount } = this.props;
-        const fieldsUnvalidated = [
+        const { campaignField, settingsFields, mode, campaignName, campaignSettings, setCurrentNewCampaign } = this.props;
+
+        let fieldsUnvalidated = [
             { ...campaignField },
             ...settingsFields
         ];
 
+        if (mode !== 'new') {
+            fieldsUnvalidated = fieldsUnvalidated.map(field => {
+                return {
+                    ...field,
+                    defaultValue: field.name === 'campaignName' ? campaignName : campaignSettings[field.name]
+                }
+            })
+        }
+
         const fields = fieldsUnvalidated.map((fieldUnvalidated) => {
             const { validator, defaultValue = '' } = fieldUnvalidated;
+
             return {
                 ...fieldUnvalidated,
                 value: defaultValue,
@@ -22,7 +33,6 @@ export default class EditCampaignSettings extends React.Component {
             }
         });
 
-        // onMount();
         this.setState({
             fields
         });
@@ -79,7 +89,10 @@ export default class EditCampaignSettings extends React.Component {
         if (isEmpty(this.state)) return null;
 
         const { fields } = this.state;
-        const { onSubmit, submitCaption, } = this.props;
+        const { mode, createCampaign, updateCampaign } = this.props;
+
+        const submitCaption = mode === 'new' ? 'Создать' : 'Обновить';
+        const onSubmit = mode === 'new' ? createCampaign : updateCampaign;
 
         const fieldsHtml = fields.map(this.field2Html);
         const onClickSubmit = (e) => {

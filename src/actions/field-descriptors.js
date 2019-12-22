@@ -8,7 +8,8 @@ export const CampaignNameField =     {
     name: 'campaignName',
     type: 'text',
     required: true,
-    desc: 'Допустимые символы: a-z,0-9,_. Например mytestcampaign_01',
+    defaultValue: 'mytestcampaign_01',
+    desc: 'Допустимые символы: a-z,0-9,_',
     validator: notEmptyValidator,
 };
 
@@ -18,7 +19,8 @@ export const CampaignSettintsFields  = [
         name: 'msg-template',
         type: 'text',
         required: true, // eslint-disable-next-line
-        desc: '"Привет ${number}, вы должны ${debt} денежек" - шаблон сообщения',
+        defaultValue: 'Привет ${number}, вы должны ${debt} денежек',
+        desc: 'Шаблон сообщения',
         validator: notEmptyValidator,
     },
     {
@@ -26,7 +28,8 @@ export const CampaignSettintsFields  = [
         name: 'callerid',
         type: 'text',
         required: true,
-        desc: 'Номер телефона, отображаемый у абонента',
+        defaultValue: '79000000000',
+        desc: 'Номер телефона, отображаемый у абонента (если позволяет транк)',
         validator: notEmptyValidator,
     },
     {
@@ -34,7 +37,7 @@ export const CampaignSettintsFields  = [
         name: 'trunk',
         type: 'text',
         required: true,
-        defaultValue: 'atk-lv',
+        defaultValue: 'bee-mob-carousel',
         desc: 'Транк, через который делать исх. вызовы',
         validator: notEmptyValidator,
     },

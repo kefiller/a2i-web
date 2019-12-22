@@ -16,6 +16,7 @@ const Workplane = ({ className }) => {
                 <Route path="/CampaignList" component={CampaignList} />
                 <Route path="/CampaignData" component={CampaignDataContainer} />
                 <Route path="/NewCampaign" component={EditCampaignSettingsContainer} />
+                <Route path="/EditCampaign" component={EditCampaignSettingsContainer} />
                 <Route path="/Logout" component={NotImplementedYet} />
                 <Route path="/Error" component={ErrorIndicator} />
             </div>

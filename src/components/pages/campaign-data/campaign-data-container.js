@@ -17,7 +17,7 @@ const mapStateToProps = ({currentCampaign: {error, loading, name, data}}) => {
 }
 
 const mapDispatchToProps = (dispatch, ownProps) => {
-    const { ccsApiService} = ownProps;
+    // const { ccsApiService} = ownProps;
     return {
         // onMount: getCampaignData(dispatch, ccsApiService, 'campaignName')
     };

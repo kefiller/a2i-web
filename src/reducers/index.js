@@ -85,6 +85,14 @@ export const reducer = (state = initialState, action) => {
                     loading: action.payload,
                 }
             };
+        case actionTypes.SET_CURRENT_CAMPAIGN_MODE:
+            return {
+                ...state,
+                currentCampaign: {
+                    ...state.currentCampaign,
+                    mode: action.payload,
+                }
+            };
         default:
             return state;
     }
