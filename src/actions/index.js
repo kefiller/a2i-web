@@ -1,5 +1,5 @@
 import * as actionTypes from './actionTypes';
-import { map, pick } from 'lodash';
+import { map, pick, sortBy } from 'lodash';
 
 export const fetchCampaignsRequest = () => {
     return {
@@ -25,12 +25,16 @@ export const fetchCampaignsError = (error) => {
 const loadCampaignsStatuses = async (ccsApiService, dispatch) => {
     try {
         const result = await ccsApiService.a2iCampaignsInfo();
-        const campaignStatuses = map(result['info'], (val, key) => {
+        const campaignStatusesUnsorted = map(result['info'], (val, key) => {
             return {
                 name: key,
                 ...val
             }
         });
+
+        const campaignStatuses = sortBy(campaignStatusesUnsorted, ['status', 'name']);
+        console.log(campaignStatuses);
+
         dispatch(fetchCampaignsSuccess(campaignStatuses));
     } catch (error) {
         console.log('loadCampaignsStatuses error', error);
