@@ -85,9 +85,11 @@ export const setCurrentCampaignMode = (mode) => {
 }
 
 export const setCurrentNewCampaign = (dispatch) => () => {
+    dispatch(setCurrentCampaignError(false));
     dispatch(setCurrentCampaignName(''));
     dispatch(setCurrentCampaignSettings([]));
     dispatch(setCurrentCampaignData([]));
+    dispatch(setCurrentCampaignMode('new'));
 }
 
 export const clearCurrentCampaignError = (dispatch) => () => {
@@ -187,6 +189,7 @@ export const goCampaignReport = (dispatch, ccsApiService) => async (name) => {
 }
 
 export const goEditCampaignSettings = (dispatch, ccsApiService, history) => async (name) => {
+    dispatch(setCurrentCampaignError(false));
     dispatch(setCurrentCampaignName(name));
     dispatch(setCurrentCampaignMode('edit'));
     try {

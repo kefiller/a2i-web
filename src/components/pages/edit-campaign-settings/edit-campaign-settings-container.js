@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 
 import EditCampaignSettings from './edit-campaign-settings';
-import { createNewCampaign, updateCampaignSettings, setCurrentNewCampaign } from '../../../actions';
+import { createNewCampaign, updateCampaignSettings } from '../../../actions';
 import withStdContainer from '../../hoc/with-std-container';
 import withCcsApiService from '../../hoc/with-ccs-api-cervice';
 
@@ -23,10 +23,8 @@ const mapStateToProps = (props) => {
 
 const mapDispatchToProps = (dispatch, { ccsApiService, history }) => {
     return {
-        // onMount: clearCurrentCampaignError(dispatch),
         createCampaign: createNewCampaign(dispatch, ccsApiService, history),
         updateCampaign: updateCampaignSettings(dispatch, ccsApiService, history),
-        setCurrentNewCampaign: setCurrentNewCampaign(dispatch),
     };
 }
 

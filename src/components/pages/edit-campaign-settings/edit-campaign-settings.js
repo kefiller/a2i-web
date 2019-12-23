@@ -7,7 +7,7 @@ export default class EditCampaignSettings extends React.Component {
     }
 
     componentDidMount = () => {
-        const { campaignField, settingsFields, mode, campaignName, campaignSettings, setCurrentNewCampaign } = this.props;
+        const { campaignField, settingsFields, mode, campaignName, campaignSettings } = this.props;
 
         let fieldsUnvalidated = [
             { ...campaignField },
