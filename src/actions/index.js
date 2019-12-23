@@ -1,5 +1,5 @@
 import * as actionTypes from './actionTypes';
-import { map, pick, sortBy } from 'lodash';
+import { map, orderBy } from 'lodash';
 
 export const fetchCampaignsRequest = () => {
     return {
@@ -32,8 +32,7 @@ const loadCampaignsStatuses = async (ccsApiService, dispatch) => {
             }
         });
 
-        const campaignStatuses = sortBy(campaignStatusesUnsorted, ['status', 'name']);
-        console.log(campaignStatuses);
+        const campaignStatuses = orderBy(campaignStatusesUnsorted, ['status', 'name'], ['asc', 'asc']);
 
         dispatch(fetchCampaignsSuccess(campaignStatuses));
     } catch (error) {
@@ -207,13 +206,22 @@ export const goEditCampaignSettings = (dispatch, ccsApiService, history) => asyn
 }
 
 export const goCampaignData = (dispatch, ccsApiService, history) => async campaignName => {
-    history.push('/CampaignData');
+
     try {
+        history.push('/CampaignData');
         dispatch(setCurrentCampaignName(campaignName));
-        const { data = [] } = await ccsApiService.a2iCampaignDataGet(campaignName);
-        const first100nums = map(data, (val, idx) => idx).slice(0, 100);
-        const first100objs = pick(data, first100nums);
-        dispatch(setCurrentCampaignData(first100objs));
+
+        // const result = await ccsApiService.a2iCampaignsInfo([campaignName]);
+        // const campaignStatusArr = map(result['info'], (val, key) => {
+        //     return {
+        //         name: key,
+        //         ...val
+        //     }
+        // });
+        // const { data = [] } = await ccsApiService.a2iCampaignDataGet(campaignName);
+        // const first100nums = map(data, (val, idx) => idx).slice(0, 100);
+        // const first100objs = pick(data, first100nums);
+        // dispatch(setCurrentCampaignData(first100objs));
     } catch (error) {
         console.log('goCampaignData error', error);
         dispatch(setCurrentCampaignError(error.message));
