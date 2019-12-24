@@ -1,7 +1,5 @@
 import React from 'react';
-//faArrowUp
-// import { faArrowDown } from "@fortawesome/free-solid-svg-icons";
-// import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import Papa from 'papaparse';
 
 export default class CampaignData extends React.Component {
     state = {}
@@ -32,7 +30,8 @@ export default class CampaignData extends React.Component {
         const onFileUpload = (file) => {
             const fileReader = new FileReader();
             fileReader.onloadend = (e) => {
-                console.log(e.target.result);
+                const result = Papa.parse(e.target.result, {header: true});
+                console.log(result);
             };
             fileReader.readAsText(file);
         }
