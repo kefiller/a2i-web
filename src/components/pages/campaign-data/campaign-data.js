@@ -4,28 +4,17 @@ import Papa from 'papaparse';
 export default class CampaignData extends React.Component {
     state = {
         hasError: true,
-        errorMsg: 'Файл не выбран'
+        msg: 'Выберите файл'
     }
 
     componentDidMount = () => {
     }
 
     render = () => {
-        const { name: campaignName, numbersTotal } = this.props;
+        const { name: campaignName, numbersTotal, addDataToCampaign } = this.props;
 
         if (!campaignName) return null;
 
-        // const arrowDown = <FontAwesomeIcon icon={faArrowDown} color="green" />;
-
-        // const rows = Object.keys(data).map((number, index) => {
-        //     return (
-        //         <tr className="row" key={index}>
-        //             <th className="col-sm-1" scope="row"><input type="checkbox" /></th>
-        //             <th className="col-sm-11" scope="row">{number}</th>
-        //             {/* <td>{status}</td> */}
-        //         </tr>
-        //     );
-        // });
         const btnStyle = {
             marginRight: '0.5em',
             marginBottom: '0.5em',
@@ -35,46 +24,33 @@ export default class CampaignData extends React.Component {
             btnStyle.display = 'none';
         }
 
-        const errMsgStyle = this.state.hasError ? { display: 'block' } : { display: 'none' };
+        // const errMsgStyle = this.state.hasError ? { display: 'block' } : { display: 'none' };
 
         const onFileChosen = (file) => {
             const fileReader = new FileReader();
             fileReader.onloadend = ({ target: { result } }) => {
-                const { data } = Papa.parse(result, { header: true });
+                const { data } = Papa.parse(result, { header: true, skipEmptyLines: true });
+                
                 this.setState({
-                    hasError: false,
+                    hasError: !data.length,
+                    msg: `${data.length} записей в файле`,
                     data
                 });
             };
             fileReader.readAsText(file);
         }
+
+        const onUploadClick = () => {
+            addDataToCampaign(campaignName, this.state.data);
+        }
+
         return (
             <React.Fragment>
-                <h2>{campaignName}</h2>
-                <h3>{numbersTotal} номеров</h3>
-                <button className="btn btn-primary" style={btnStyle}>Загрузить</button>
+                <h2>{campaignName} : {numbersTotal} номеров</h2>
+                <button className="btn btn-primary" style={btnStyle} onClick={onUploadClick}>Загрузить</button>
                 <input type="file" name="file" onChange={(e) => onFileChosen(e.target.files[0])} />
                 <br />
-                <h4 style={errMsgStyle}>{this.state.errorMsg}</h4>
-                {/*<button className="btn btn-danger" disabled style={style}>Удалить все номера</button>
-                 <div className="container-fluid">
-                    <div className="row">
-                        <div className="col-sm-4">
-                            <table className="table">
-                                <thead>
-                                    <tr className="row">
-                                        <th scope="col" className="col-sm-1" ><input type="checkbox" /></th>
-                                        <th scope="col" className="col-sm-11">Number</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    {rows}
-                                </tbody>
-                            </table>
-                        </div>
-                        <div className="col-sm-8"></div>
-                    </div>
-                </div> */}
+                <h4>{this.state.msg}</h4>
             </React.Fragment>
         );
     }

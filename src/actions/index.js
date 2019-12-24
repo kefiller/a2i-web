@@ -38,6 +38,8 @@ const loadCampaignsStatuses = async (ccsApiService, dispatch) => {
     } catch (error) {
         console.log('loadCampaignsStatuses error', error);
         fetchCampaignsError(error);
+    } finally {
+        dispatch(setCurrentCampaignLoading(false));
     }
 }
 
@@ -235,10 +237,30 @@ export const archiveCampaign = (dispatch, ccsApiService) => async (name) => {
 export const dropCampaign = (dispatch, ccsApiService) => async (name) => {
     console.log('dropping campaign', name);
     try {
+        dispatch(setCurrentCampaignLoading(true));
         await ccsApiService.a2iCampaignDrop(name);
+        dispatch(setCurrentCampaignLoading(false));
         console.log('campaign dropped', name);
         loadCampaignsStatuses(ccsApiService, dispatch);
     } catch (error) {
         console.log(error);
+    } finally {
+        dispatch(setCurrentCampaignLoading(false));
+    }
+}
+
+export const addDataToCampaign = (dispatch, ccsApiService, history) => async (name, data) => {
+    console.log('adding data to campaign', name);
+    try {
+        dispatch(setCurrentCampaignLoading(true));
+        await ccsApiService.a2iCampaignDataAdd(name, data);
+        dispatch(setCurrentCampaignLoading(false));
+        console.log('data added ok to', name);
+        loadCampaignsStatuses(ccsApiService, dispatch);
+        history.push('/CampaignList');
+    } catch (error) {
+        console.log(error);
+    } finally {
+        dispatch(setCurrentCampaignLoading(false));
     }
 }

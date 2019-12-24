@@ -6,6 +6,8 @@ import { connect } from 'react-redux';
 import Spinner from '../../spinner';
 
 import withCcsApiService from '../../hoc/with-ccs-api-cervice';
+import withStdContainer from '../../hoc/with-std-container';
+
 import {
     fetchCampaigns,
     startCampaign,
@@ -59,9 +61,10 @@ class CampaignList extends React.Component {
     }
 }
 
-const mapStateToProps = ({ campaigns }) => {
+const mapStateToProps = ({ campaigns, currentCampaign: {loading} }) => {
     return {
-        campaigns
+        campaigns,
+        loading
     };
 }
 
@@ -82,5 +85,6 @@ const mapDispatchToProps = (dispatch, { ccsApiService, history }) => {
 export default compose(
     withRouter,
     withCcsApiService,
-    connect(mapStateToProps, mapDispatchToProps)
+    connect(mapStateToProps, mapDispatchToProps),
+    withStdContainer
 )(CampaignList);
