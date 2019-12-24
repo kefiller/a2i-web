@@ -2,7 +2,10 @@ import React from 'react';
 import Papa from 'papaparse';
 
 export default class CampaignData extends React.Component {
-    state = {}
+    state = {
+        hasError: true,
+        errorMsg: 'Файл не выбран'
+    }
 
     componentDidMount = () => {
     }
@@ -23,15 +26,25 @@ export default class CampaignData extends React.Component {
         //         </tr>
         //     );
         // });
-        const style = {
+        const btnStyle = {
             marginRight: '0.5em',
             marginBottom: '0.5em',
         };
-        const onFileUpload = (file) => {
+
+        if (this.state.hasError) {
+            btnStyle.display = 'none';
+        }
+
+        const errMsgStyle = this.state.hasError ? { display: 'block' } : { display: 'none' };
+
+        const onFileChosen = (file) => {
             const fileReader = new FileReader();
-            fileReader.onloadend = (e) => {
-                const result = Papa.parse(e.target.result, {header: true});
-                console.log(result);
+            fileReader.onloadend = ({ target: { result } }) => {
+                const { data } = Papa.parse(result, { header: true });
+                this.setState({
+                    hasError: false,
+                    data
+                });
             };
             fileReader.readAsText(file);
         }
@@ -39,11 +52,12 @@ export default class CampaignData extends React.Component {
             <React.Fragment>
                 <h2>{campaignName}</h2>
                 <h3>{numbersTotal} номеров</h3>
-                <button className="btn btn-primary" style={style}>Загрузить из файла</button>
-                <input type="file" name="file" onChange={(e) => onFileUpload(e.target.files[0])} />
+                <button className="btn btn-primary" style={btnStyle}>Загрузить</button>
+                <input type="file" name="file" onChange={(e) => onFileChosen(e.target.files[0])} />
                 <br />
-                <button className="btn btn-danger" disabled style={style}>Удалить все номера</button>
-                {/* <div className="container-fluid">
+                <h4 style={errMsgStyle}>{this.state.errorMsg}</h4>
+                {/*<button className="btn btn-danger" disabled style={style}>Удалить все номера</button>
+                 <div className="container-fluid">
                     <div className="row">
                         <div className="col-sm-4">
                             <table className="table">
