@@ -15,36 +15,10 @@ export const fetchCampaignsSuccess = (campaigns) => {
 }
 
 export const fetchCampaignsError = (error) => {
-    console.log('fetchCampaignsError', error);
     return {
         type: actionTypes.FETCH_CAMPAIGNS_ERROR,
         payload: error
     };
-}
-
-const loadCampaignsStatuses = async (ccsApiService, dispatch) => {
-    try {
-        const result = await ccsApiService.a2iCampaignsInfo();
-        const campaignStatusesUnsorted = map(result['info'], (val, key) => {
-            return {
-                name: key,
-                ...val
-            }
-        });
-
-        const campaignStatuses = orderBy(campaignStatusesUnsorted, ['status', 'name'], ['asc', 'asc']);
-
-        dispatch(fetchCampaignsSuccess(campaignStatuses));
-    } catch (error) {
-        console.log('loadCampaignsStatuses error', error);
-        fetchCampaignsError(error);
-    } finally {
-        dispatch(setCurrentCampaignLoading(false));
-    }
-}
-
-export const fetchCampaigns = (dispatch, ccsApiService) => () => {
-    loadCampaignsStatuses(ccsApiService, dispatch);
 }
 
 export const setCurrentCampaignName = (name) => {
@@ -87,6 +61,40 @@ export const setCurrentCampaignMode = (mode) => {
         type: actionTypes.SET_CURRENT_CAMPAIGN_MODE,
         payload: mode
     };
+}
+
+export const setCurrentCampaignReport = (report) => {
+    return {
+        type: actionTypes.SET_CURRENT_CAMPAIGN_REPORT,
+        payload: report
+    };
+}
+
+const loadCampaignsStatuses = async (dispatch, ccsApiService) => {
+    try {
+        console.log('loading campaign statuses..');
+        const result = await ccsApiService.a2iCampaignsInfo();
+        console.log('loading campaign statuses complete');
+        const campaignStatusesUnsorted = map(result['info'], (val, key) => {
+            return {
+                name: key,
+                ...val
+            }
+        });
+
+        const campaignStatuses = orderBy(campaignStatusesUnsorted, ['status', 'name'], ['asc', 'asc']);
+
+        dispatch(fetchCampaignsSuccess(campaignStatuses));
+    } catch (error) {
+        console.log('loadCampaignsStatuses error', error);
+        fetchCampaignsError(error);
+    } finally {
+        dispatch(setCurrentCampaignLoading(false));
+    }
+}
+
+export const fetchCampaigns = (dispatch, ccsApiService) => () => {
+    loadCampaignsStatuses(dispatch, ccsApiService);
 }
 
 export const setCurrentNewCampaign = (dispatch) => () => {
@@ -183,14 +191,10 @@ export const stopCampaign = (dispatch, ccsApiService) => async (name) => {
     try {
         await ccsApiService.a2iCampaignStop(name);
         console.log('stop signal sent', name);
-        loadCampaignsStatuses(ccsApiService, dispatch);
+        loadCampaignsStatuses(dispatch, ccsApiService);
     } catch (error) {
         console.log(error);
     }
-}
-
-export const goCampaignReport = (dispatch, ccsApiService) => async (name) => {
-    console.log('goCampaignReport', name);
 }
 
 export const goEditCampaignSettings = (dispatch, ccsApiService, history) => async (name) => {
@@ -241,7 +245,7 @@ export const dropCampaign = (dispatch, ccsApiService) => async (name) => {
         await ccsApiService.a2iCampaignDrop(name);
         dispatch(setCurrentCampaignLoading(false));
         console.log('campaign dropped', name);
-        loadCampaignsStatuses(ccsApiService, dispatch);
+        loadCampaignsStatuses(dispatch, ccsApiService);
     } catch (error) {
         console.log(error);
     } finally {
@@ -256,7 +260,7 @@ export const addDataToCampaign = (dispatch, ccsApiService, history) => async (na
         await ccsApiService.a2iCampaignDataAdd(name, data);
         dispatch(setCurrentCampaignLoading(false));
         console.log('data added ok to', name);
-        loadCampaignsStatuses(ccsApiService, dispatch);
+        loadCampaignsStatuses(dispatch, ccsApiService);
         history.push('/CampaignList');
     } catch (error) {
         console.log(error);
@@ -264,3 +268,22 @@ export const addDataToCampaign = (dispatch, ccsApiService, history) => async (na
         dispatch(setCurrentCampaignLoading(false));
     }
 }
+
+export const goCampaignReport = (dispatch, ccsApiService, history) => async (name) => {
+    console.log('creating campaign report', name);
+    try {
+        dispatch(setCurrentCampaignName(name));
+        dispatch(setCurrentCampaignLoading(true));
+        const { report } = await ccsApiService.a2iCampaignReport(name);
+        dispatch(setCurrentCampaignReport(report));
+        dispatch(setCurrentCampaignLoading(false));
+        console.log('report created ok', name);
+        history.push('/CampaignReport');
+    } catch (error) {
+        console.log(error);
+    } finally {
+        dispatch(setCurrentCampaignLoading(false));
+    }
+}
+
+

@@ -19,7 +19,7 @@ export const CampaignSettintsFields  = [
         name: 'msg-template',
         type: 'text',
         required: true, // eslint-disable-next-line
-        defaultValue: 'Привет ${number}, вы должны ${debt} денежек',
+        defaultValue: '${uk} напоминает вам, что за вашей квартирой по адресу ${adres} числится задолженность за жилищно-коммунальные услуги в размере ${dolg} рублей. Телефон ${tel}',
         desc: 'Шаблон сообщения',
         validator: notEmptyValidator,
     },

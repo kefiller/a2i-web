@@ -10,6 +10,7 @@ const initialState = {
         name: '',
         settings: [],
         data: [],
+        report: [],
         mode: 'new', // new or edit
         loading: false,
         error: false
@@ -91,6 +92,14 @@ export const reducer = (state = initialState, action) => {
                 currentCampaign: {
                     ...state.currentCampaign,
                     mode: action.payload,
+                }
+            };
+        case actionTypes.SET_CURRENT_CAMPAIGN_REPORT:
+            return {
+                ...state,
+                currentCampaign: {
+                    ...state.currentCampaign,
+                    report: action.payload,
                 }
             };
         default:

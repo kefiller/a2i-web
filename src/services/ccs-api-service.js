@@ -199,6 +199,15 @@ export default class CCSApiService {
         });
     }
 
+    a2iCampaignReport = (name) => {
+        return this.post({
+            'method': 'a2i.campaign.report',
+            'auth': this.auth,
+            'params': {
+                name
+            }
+        });
+    }
 
     post = (request) => {
         const config = {
