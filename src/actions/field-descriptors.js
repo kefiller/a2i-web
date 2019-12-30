@@ -145,7 +145,7 @@ export const CampaignSettintsFields  = [
         name: 'emails',
         type: 'text',
         required: false,
-        defaultValue: 'erofeev@regenergy.ru,zaharov.i@domkominvest.ru,nikonov.ae@domkominvest.ru,grishkova.te@domkominvest.ru,nurutdinov.rr@domkominvest.ru',
+        defaultValue: 'zaharov.i@domkominvest.ru,nikonov.ae@domkominvest.ru,grishkova.te@domkominvest.ru,nurutdinov.rr@domkominvest.ru',
         desc: 'куда отправлять уведомления об основных событиях кампании(старт/стоп)',
         validator: notEmptyValidator,
     },
