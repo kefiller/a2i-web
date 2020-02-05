@@ -1,2 +1,2 @@
 # a2i-web
-Web interface for CCS
+Web interface for CCS autoinforming system
