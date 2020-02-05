@@ -1,0 +1,12 @@
+.Sidebar {
+    /* border: 1px solid red; */
+}
+
+.nav-link {
+    color: rgb(69, 77, 85);
+    font-weight: 600;
+}
+
+.nav-link.active {
+    font-weight: 800;
+}

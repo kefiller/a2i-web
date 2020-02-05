@@ -1,0 +1,13 @@
+.App {
+  text-align: center;
+}
+
+.App-link {
+  color: #61dafb;
+}
+
+.mainplane {
+  padding-top: 20px;
+  min-height: 85vh;
+  text-align: left;
+}
